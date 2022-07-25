@@ -1,6 +1,16 @@
 # Задание 4. Реализуйте RLE алгоритм: реализуйте модуль сжатия и восстановления данных.  
 # Входные и выходные данные хранятся в отдельных текстовых файлах.
 
+def cleared():
+    if int(input('Для очистки рабочих файлов введите 0.\n'
+        'Для сохранения - другое число: ')) == 0:
+        cleared_data = ''
+        cleared_file = comprssed_file
+        wf.writing_file(cleared_data, cleared_file)
+        cleared_file = comprssed_file
+        wf.writing_file(cleared_data, recovered_file)
+
+cleared()
 work_file = 'files/f_data5_4_source.txt'
 way = input('Если Вы хотите сгенерировать новый поток данных, введите 1,\n'
     'если нет - введите любое другое число: ')
@@ -23,3 +33,5 @@ restored_data = dec.rle_decoding(compressed_data)
 
 recovered_file = 'files/f_data5_4_recovered.txt'
 wf.writing_file(restored_data, recovered_file)
+
+cleared()

@@ -10,10 +10,10 @@ def func_transfrom_text(simbols: list, source_text: str) -> list:
     transfrom_text = transfrom_text.split()
     return transfrom_text
 
-def func_exclude_text(exclude_str: str, option: int, transfrom_text: list) -> list:
+def func_exclude_text(exclude_str: str, option: str, transfrom_text: list) -> list:
     exclude_list = transfrom_text
     for el in transfrom_text:
-        if option == 1:
+        if option == '1':
             if exclude_str.lower() in el.lower():
                 exclude_list.remove(el) 
         else:
@@ -21,12 +21,9 @@ def func_exclude_text(exclude_str: str, option: int, transfrom_text: list) -> li
                 exclude_list.remove(el) 
     return exclude_list
 
-def new_name(simbols):
-    return [' ' + item for item in simbols]
-
 def recovery_exclude_text(exclude_list: list, simbols: list) -> str:
     exclude_text = " ".join(exclude_list)
-    simbols2 = new_name(simbols)
+    simbols2 = [' ' + item for item in simbols]
     for item in range(len(simbols2)):
         exclude_text = exclude_text.replace(simbols2[item], simbols[item]) 
     exclude_text = exclude_text.replace('\\n ', '\n')
@@ -37,13 +34,20 @@ simbols = ['.', ',', ':', ';', '!', '?', '\\n']
 work_file = 'files/f_text5_1_course.txt'
 import Func_read_files as rf
 source_text = rf.read_file(work_file)
-option = int(input('Если слова нужно удалить без учёта регистра, введите 1.\n'
-    'Если нужно учитывать регистр, введите любое другое число: '))
+option = input('Если слова нужно удалить без учёта регистра, введите 1.\n'
+    'Если нужно учитывать регистр, введите любой другой символ: ')
 transfrom_text = func_transfrom_text(simbols, source_text)
 exclude_list = func_exclude_text(exclude_str, option, transfrom_text)
 exclude_text = recovery_exclude_text(exclude_list, simbols)
+if option == '1':
+    option = 'без учёта регистра'
+else:
+    option = 'с учётом регистра'
+print(f'\nРезультатом удаления из исходного текста:\n"{source_text}"\n'
+    f'слов, содержащих группу символов "{exclude_str}" {option}, является новый '
+        f'текст: \n"{exclude_text}".' )
 
-exclude_file = 'files/f_text5_1_exclude.txt'
-# Сохраняем результат в текстовый файл
-import Func_writing_file as wf
-wf.writing_file(exclude_text, exclude_file)
+if input('Для записи нового текста в файл нажмите "1": ') == '1':
+    exclude_file = 'files/f_text5_1_exclude.txt'
+    import Func_writing_file as wf
+    wf.writing_file(exclude_text, exclude_file)
